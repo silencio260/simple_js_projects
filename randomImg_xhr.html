@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Document</title>
+
+    <style>
+    
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    img{
+        margin: 10px;
+        width: 400px;
+        height: 400px;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<!--  -->
+    <h1>Random Image Generator</h1>
+    <img src="" alt="Image it to be here">
+    <button id="changer"> Click me</button>
+
+
+<script>
+
+    var btn = document.querySelector('#changer')
+    var img = document.querySelector('img')
+
+    btn.addEventListener('click', function(){
+
+        var xhr = new XMLHttpRequest();  
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                if(xhr.status == 200){
+                    var url = JSON.parse(xhr.responseText).message
+                    img.src = url;     
+                    console.log(url)               
+                }
+            }
+        }
+
+            xhr.open('GET', 'https://dog.ceo/api/breeds/image/random')
+            xhr.send();
+    })
+
+
+</script>
+    
+</body>
+</html>

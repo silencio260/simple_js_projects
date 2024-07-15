@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <style>
+        body{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            background-color: gainsboro;
+            align-items: center;
+            font-weight: bold;
+        }
+        section{
+            margin: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            min-width: 500px;
+            min-height: 200px;
+            background-color: beige;
+        }
+    
+        img{
+            margin: 30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        button{
+           width: 100%;
+           max-height: 120px;
+           border: none;
+           border-bottom-right-radius: 5px;
+           border-bottom-left-radius: 5px;
+           background-color: green;
+           font-size: 20px;
+           padding: 10px;
+           color: white;
+            
+        }
+
+        div h1{
+            color: green;
+            font-size: 30px;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        div #username{
+            color:mediumturquoise;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 0;
+            margin-top: 0;
+            /* margin-bottom: 10px; */
+        }
+
+        #others{
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: gray;
+        }
+
+        #others p{
+            padding: 0;
+            margin: 0;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <h1>Random User Generator</h1>
+
+    <section>
+        <img id='img' src="jon_snow.jpg" alt="image here">
+        <div>
+            <h1 id="fullName">Jon Snow</h1>
+            <p id="username">kingofthenorth</p>
+
+            <div id="others">
+                <p>Email: <span id="email">jon@gmail.com</span></p>
+                <p>City: <span id="city">Thernorth</span></p>
+            </div>
+            
+        </div>
+        <button id="btn"> Next! </button>
+    </section>
+
+
+
+<!--*********************** -->
+<script>
+
+    var img = document.getElementById('img');
+    var btn = document.getElementById('btn');                    
+    var url = 'https://randomuser.me/api/';                    
+    var fullName = document.getElementById('fullName')
+    var userName = document.getElementById('username');                    
+    var email = document.getElementById('email');
+    var city = document.getElementById('city');
+
+    btn.addEventListener('click', function(){
+
+        fetch(url)
+        .then(function(request){
+            if(!request.ok){
+                throw(request.status)
+            }
+            return request.json();
+        })
+        .then(function(response){
+            console.log(response)
+            profile = response.results[0];
+            
+            img.src = profile.picture.medium;
+            fullName.innerText = profile.name.last + ' ' + profile.name.first;
+            userName.innerText = profile.login.username;
+            email.innerText = profile.email;
+            city.innerText = profile.location.city;
+
+        })
+
+        .catch(function(error){
+            console.log('error in code ' + error)
+        })
+
+    })
+    
+</script>
+
+</body>
+</html>

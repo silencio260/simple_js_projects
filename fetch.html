@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <style>
+        span{
+            color: green;
+        }
+    </style>
+
+</head>
+<body>
+
+
+    <h1>Bitcoin Current Price is: <span> </span></h1>
+
+    <button id="btn">Refresh Price</button>
+
+<!-- https://api.coindesk.com/v1/bpi/currentprice.json -->
+<script>
+
+    var btn = document.querySelector('#btn')
+    var span = document.querySelector('span')
+    var url ='https://api.coindesk.com/v1/bpi/currentprice.json'
+
+    btn.addEventListener('click', function(){
+
+        fetch(url, {method: 'GET'})
+        .then(function(request){
+            if(!request.ok){
+                throw Error(404)
+            }
+            return request;
+        })
+        .then(function(response){
+            return response.json()
+        })
+        .then(function(response){
+            console.log(response)
+            span.innerHTML = response.bpi.EUR.rate +' ' + response.bpi.EUR.description
+
+        }).catch(function(error){
+            console.log('something went wrong/n' + error)
+        })
+    
+   
+    })
+
+
+</script>
+    
+</body>
+</html>
